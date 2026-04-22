@@ -10,5 +10,17 @@
     "company": "PRIVATE",
     "location": "JUBAIL",
     "trainer": "ZEESHAN KHAN"
+  },
+  {
+    "id": "148-2025-008544-EN",
+    "published": "16/04/2026",
+    "name": "MD.MAHMODUL HASAN",
+    "user_id": "2631305204",
+    "valid_until": "15/04/2027",
+    "type": "SCAFFOLDING ERECTOR AND DISMANTLER",
+    "model": "N/A",
+    "company": "PRIVATE",
+    "location": "JUBAIL",
+    "trainer": "ZEESHAN KHAN"
   }
 ]
