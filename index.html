@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Verifier</title>
+
+<style>
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* BODY */
+body {
+    height: 100vh;
+    overflow-y: auto;
+    background: url('Background.png') no-repeat center top;
+    background-size: cover;
+}
+
+/* CONTAINER */
+.content-view {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+    padding-bottom: 80px;
+}
+
+/* SEARCH */
+.search-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 95%;
+    max-width: 380px;
+    text-align: center;
+}
+
+.search-card input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: #002195;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* RESULT */
+.result-card {
+    background: #e6e6e6;
+    width: 95%;
+    max-width: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    max-height: 75vh;
+}
+
+/* TOP AREA */
+.top-area {
+    background: linear-gradient(#9e9e9e, #bdbdbd);
+    padding: 20px;
+    text-align: center;
+}
+
+.status-circle {
+    width: 65px;
+    height: 65px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    line-height: 65px;
+    font-size: 30px;
+    margin: auto;
+}
+
+/* DATA */
+#result-data {
+    padding: 15px;
+}
+
+.data-item {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.label {
+    font-weight: bold;
+}
+
+/* FOOTER */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.footer a {
+    text-decoration: none;
+    color: black;
+}
+
+/* HIDE */
+.hidden {
+    display: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="content-view">
+
+    <!-- SEARCH -->
+    <div id="search-box" class="search-card">
+        <h3>Please search your e-document by filling the document number.</h3>
+
+        <input type="text" id="docInput" placeholder="Enter document number">
+
+        <button class="search-btn" onclick="searchDoc()">Search Certificate</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-box" class="result-card hidden">
+
+        <div class="top-area">
+            <div class="status-circle">✓</div>
+        </div>
+
+        <div id="result-data"></div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <a href="https://group.bureauveritas.com/" target="_blank">
+        Visit Bureau Veritas Website
+    </a>
+</div>
+
+<script>
+
+async function searchDoc() {
+
+    let input = document.getElementById("docInput").value.trim();
+
+    if (input === "") {
+        alert("Please enter document number");
+        return;
+    }
+
+    try {
+        let res = await fetch("data.json");
+        let data = await res.json();
+
+        let found = data.find(item => item.id === input);
+
+        if (!found) {
+            alert("Invalid Certificate Number ❌");
+            return;
+        }
+
+        document.getElementById("search-box").classList.add("hidden");
+        document.getElementById("result-box").classList.remove("hidden");
+
+        document.getElementById("result-data").innerHTML = `
+            <div class="data-item"><span class="label">Deliverable Id :</span><br>${found.id}</div>
+            <div class="data-item"><span class="label">Published on :</span><br>${found.published}</div>
+            <div class="data-item"><span class="label">QR Code Status :</span><br><span style="color:green;">Validated</span></div>
+            <div class="data-item"><span class="label">NAME :</span><br>${found.name}</div>
+            <div class="data-item"><span class="label">ID :</span><br>${found.nid}</div>
+            <div class="data-item"><span class="label">ISSUED ON :</span><br>${found.issued}</div>
+            <div class="data-item"><span class="label">VALID UNTIL :</span><br>${found.valid}</div>
+            <div class="data-item"><span class="label">TYPE :</span><br>${found.type}</div>
+            <div class="data-item"><span class="label">MODEL :</span><br>${found.model}</div>
+            <div class="data-item"><span class="label">COMPANY :</span><br>${found.company}</div>
+            <div class="data-item"><span class="label">TRAINING LOCATION :</span><br>${found.location}</div>
+            <div class="data-item"><span class="label">TRAINER :</span><br>${found.trainer}</div>
+        `;
+
+    } catch (e) {
+        alert("Error loading data.json");
+        console.log(e);
+    }
+}
+
+</script>
+
+</body>
+</html>

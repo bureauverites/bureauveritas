@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    overflow-y: auto; /* pull to refresh কাজ করবে */
+    background: url('Background.png') no-repeat center bottom;
+    background-size: cover;
+}
+
+/* MAIN CONTAINER */
+.content-view {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* উপরে রাখবে */
+    align-items: center;
+    padding-top: 120px; /* নীল অংশের নিচে নামাবে */
+    padding-bottom: 70px; /* নিচে space for website */
+}
+
+/* RESULT CARD (মোটা + এক পেজে ফিট) */
+.result-card {
+    background: #e6e6e6;
+    width: 95%;            /* আগের থেকে মোটা */
+    max-width: 420px;
+    height: auto;          /* fixed height বাদ */
+    max-height: 75vh;      /* এক পেজে ফিট */
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden;      /* scroll বন্ধ */
+}
+
+/* DATA */
+#result-data {
+    overflow: hidden;
+}
+
+/* VISIT WEBSITE নিচে ফিক্স */
+.visit-site {
+    position: fixed;
+    bottom: 15px;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    color: black;
+}
+
+.visit-site a {
+    text-decoration: none;
+    color: black;
+}
